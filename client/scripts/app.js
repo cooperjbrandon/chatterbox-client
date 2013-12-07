@@ -3,6 +3,25 @@ var events = _.clone(Backbone.Events);
 var Message = function(){
 };
 
+Message.prototype.fillUp = function(uname, txt, rmname){
+  $.ajax({
+    url: 'http://127.0.0.1:8080/classes/messages',
+    type: 'POST',
+    data: JSON.stringify({
+      username: uname,
+      text: txt,
+      roomname: rmname
+    }),
+    contentType: 'application/json',
+    success: function(){
+      console.log('chatterbox: Message sent');
+    },
+    error: function (data) {
+      // see: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+      console.error('chatterbox: Failed to send message');
+    }
+  });
+};
 
 Message.prototype.send = function(uname, txt, rmname){
   $.ajax({
@@ -82,8 +101,9 @@ MessageView.prototype.getAndDisplay = function(){
 var getMessages = function(cb){
   $.ajax({
     type: 'GET',
-    url: 'http://127.0.0.1:8080',
-    success:function(data){cb(data.results);},
+    url: 'http://127.0.0.1:8080/classes/messages',
+    success:function(data){
+      cb(data);},
     error:function(){console.log("GET error");}
   });
 };

@@ -33,6 +33,9 @@
     <script type="text/javascript">
       $(document).ready(function(){
         var message = new Message();
+        for (var i = 0; i < 100; i++) {
+          message.fillUp('brandon', 'confusing', 'roomba');
+        }
         new ChatView({message: message});
         new MessageView();
       });
